@@ -3,7 +3,7 @@ import MapMain from '../Components/MapMain';
 
 export default function HomeScreen() {
   return (
-    <View>
+    <View style={{ userSelect: 'none' }}>
       <StatusBar barStyle="dark-content" />
       <MapMain />
       {/* <meta name="google-site-verification" content="UspP3DDYnSWFI8GVFIh9aga5ERmrszCflG4i1JVqJVk" /> */}
