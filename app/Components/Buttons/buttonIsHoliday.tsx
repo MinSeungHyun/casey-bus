@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View } from "react-native";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View } from 'react-native';
 
 type ToggleProps = {
   checked: boolean;
@@ -8,12 +8,7 @@ type ToggleProps = {
   style?: object;
 };
 
-export default function ButtonIsHoliday({
-  checked,
-  onChange,
-  disabled,
-  style,
-}: ToggleProps) {
+export default function ButtonIsHoliday({ checked, onChange, disabled, style }: ToggleProps) {
   const anim = useRef(new Animated.Value(checked ? 1 : 0)).current;
   const [box, setBox] = useState({ w: 0, h: 0 });
 
@@ -38,27 +33,22 @@ export default function ButtonIsHoliday({
         inputRange: [0, 1],
         outputRange: [0, Math.max(0, box.w / 2)], // 절반 이동
       }),
-    [anim, box.w]
+    [anim, box.w],
   );
 
   // 텍스트 색상 전환
-  const dark = "#343434";
+  const dark = '#343434';
   const leftTextColor = anim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#fff", dark],
+    outputRange: ['#fff', dark],
   });
   const rightTextColor = anim.interpolate({
     inputRange: [0, 1],
-    outputRange: [dark, "#fff"], 
-    
+    outputRange: [dark, '#fff'],
   });
 
   return (
-    <Pressable
-      disabled={disabled}
-      onPress={() => onChange(!checked)}
-      style={[styles.touchWrap]}
-    >
+    <Pressable disabled={disabled} onPress={() => onChange(!checked)} style={[styles.touchWrap]}>
       <View style={[styles.container, style]} onLayout={onLayout}>
         {/* 배경(웹의 .toggleContainer) */}
         <View style={styles.bg} />
@@ -95,34 +85,34 @@ const styles = StyleSheet.create({
     // body 중앙 정렬은 부모에서 해줘. 여기선 컴포넌트 자체만.
   },
   container: {
-    position: "relative",
+    position: 'relative',
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: "#fff",
-    overflow: "hidden",
+    borderColor: '#fff',
+    overflow: 'hidden',
   },
   bg: {
     ...StyleSheet.absoluteFillObject,
     borderRadius: 50,
   },
   slider: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     top: 0,
-    backgroundColor: "#343434",
+    backgroundColor: '#343434',
     borderRadius: 0,
   },
   row: {
     // grid(2열) 대신 flex 두 칸
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   cellText: {
     height: 20,
     flex: 1,
-    textAlign: "center",
+    textAlign: 'center',
     lineHeight: 20,
     fontSize: 10,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });

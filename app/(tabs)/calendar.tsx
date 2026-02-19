@@ -16,7 +16,6 @@ type MarkedItem = {
 
 type MarkedDates = Record<string, MarkedItem>;
 
-
 export default function Calendar() {
   const [marked, setMarked] = useState<MarkedDates>({});
   const [selectedEvent, setSelectedEvent] = useState<string[] | null>(null);
@@ -27,38 +26,30 @@ export default function Calendar() {
 
     const year = new Date().getFullYear();
     const start = new Date(year, 0, 1);
-    const end = new Date(year+3, 11, 31);
+    const end = new Date(year + 3, 11, 31);
 
-
-        holidaysData.holidays.forEach((holiday) => {
+    holidaysData.holidays.forEach((holiday) => {
       const { Year, Month, Date, name, US, KATUSA } = holiday;
       const key = `${Year}-${String(Month).padStart(2, '0')}-${String(Date).padStart(2, '0')}`;
 
       const prev = marks[key] as MarkedItem | null;
 
       // 누적 플래그(OR)
-      const us = (prev&&prev.meta? prev.meta.US? true : US : US);
-      const katusa = (prev&&prev.meta? prev.meta.KATUSA? true : KATUSA : KATUSA);
+      const us = prev && prev.meta ? (prev.meta.US ? true : US) : US;
+      const katusa = prev && prev.meta ? (prev.meta.KATUSA ? true : KATUSA) : KATUSA;
 
       // 색 계산
       const bg =
-        us && katusa ? '#f1e2fdff' :
-        us ? '#fdf6ddff' :
-        katusa ? '#d9ecdcff' :
-        'transparent';
+        us && katusa ? '#f1e2fdff' : us ? '#fdf6ddff' : katusa ? '#d9ecdcff' : 'transparent';
 
-      const fg =
-        us && katusa ? '#770095ff' :
-        us ? '#ffc400ff' :
-        katusa ? '#00570cff' :
-        'black';
+      const fg = us && katusa ? '#770095ff' : us ? '#ffc400ff' : katusa ? '#00570cff' : 'black';
 
       marks[key] = {
         customStyles: {
           container: { backgroundColor: bg, borderRadius: 5 },
           text: { color: fg },
         },
-        eventNames: prev&&prev.eventNames ? [...prev.eventNames, name] : [name],
+        eventNames: prev && prev.eventNames ? [...prev.eventNames, name] : [name],
         meta: { US: us, KATUSA: katusa },
       };
     });
@@ -68,34 +59,32 @@ export default function Calendar() {
       const weekday = d.getDay();
 
       const prev = marks[key] as MarkedItem | null;
-      
-        if (weekday === 0) {
-          // 일요일
-          marks[key] = {
-            customStyles: {
-              container: {
-                backgroundColor: '#feebebff',
-                borderRadius: 8,
-              },
-              text: { color: '#c62828' },
-            },
-            eventNames: prev&&prev.eventNames ? prev.eventNames : null,
-          };
-        } else if (weekday === 6) {
-          // 토요일
-          marks[key] = {
-            customStyles: {
-              container: {
-                backgroundColor: '#e7f4feff',
-                borderRadius: 8,
-              },
-              text: { color: '#1565c0' },
-            },
-          };
-        }
-      
-    }
 
+      if (weekday === 0) {
+        // 일요일
+        marks[key] = {
+          customStyles: {
+            container: {
+              backgroundColor: '#feebebff',
+              borderRadius: 8,
+            },
+            text: { color: '#c62828' },
+          },
+          eventNames: prev && prev.eventNames ? prev.eventNames : null,
+        };
+      } else if (weekday === 6) {
+        // 토요일
+        marks[key] = {
+          customStyles: {
+            container: {
+              backgroundColor: '#e7f4feff',
+              borderRadius: 8,
+            },
+            text: { color: '#1565c0' },
+          },
+        };
+      }
+    }
 
     const now = new Date();
     const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -112,61 +101,60 @@ export default function Calendar() {
           shadowOffset: { width: 0, height: 2 },
         },
         text: {
-          color: 'white',              
+          color: 'white',
           fontWeight: '400',
         },
       },
 
-      eventNames: prev&&prev.eventNames ? [...prev.eventNames, 'Today'] : ['Today'],
+      eventNames: prev && prev.eventNames ? [...prev.eventNames, 'Today'] : ['Today'],
     };
-
-
-
-
-    
 
     setMarked(marks);
   }, []);
 
   return (
     <View style={styles.container}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.logoCircle}>
-            <FontAwesome6 name="calendar" size={26} style={{ color: '#fff' }} />
-          </View>
-          <Text style={styles.title}>USFK Calendar</Text>
-          <Text style={styles.subtitle}>Unified schedule & holiday guide</Text>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.logoCircle}>
+          <FontAwesome6 name="calendar" size={26} style={{ color: '#fff' }} />
         </View>
-
+        <Text style={styles.title}>USFK Calendar</Text>
+        <Text style={styles.subtitle}>Unified schedule & holiday guide</Text>
+      </View>
 
       <View style={styles.colorIndexBox}>
         <View style={styles.colorIndex}>
-            <Text style={styles.colorIndexText}>US/KATUSA</Text>
-            <Text style={[styles.colorSquare, {backgroundColor: '#f1e2fdff', color:'#770095ff'}]}>1</Text>
+          <Text style={styles.colorIndexText}>US/KATUSA</Text>
+          <Text style={[styles.colorSquare, { backgroundColor: '#f1e2fdff', color: '#770095ff' }]}>
+            1
+          </Text>
         </View>
         <View style={styles.colorIndex}>
-            <Text style={styles.colorIndexText}>US Only</Text>
-            <Text style={[styles.colorSquare, {backgroundColor: '#fdf6ddff', color:'#ffc400ff'}]}>1</Text>
+          <Text style={styles.colorIndexText}>US Only</Text>
+          <Text style={[styles.colorSquare, { backgroundColor: '#fdf6ddff', color: '#ffc400ff' }]}>
+            1
+          </Text>
         </View>
         <View style={styles.colorIndex}>
-            <Text style={styles.colorIndexText}>KATUSA Only</Text>
-            <Text style={[styles.colorSquare, {backgroundColor: '#d9ecdcff', color:'#00570cff'}]}>1</Text>
+          <Text style={styles.colorIndexText}>KATUSA Only</Text>
+          <Text style={[styles.colorSquare, { backgroundColor: '#d9ecdcff', color: '#00570cff' }]}>
+            1
+          </Text>
         </View>
       </View>
       <RNCalendar
-
         style={styles.calendar}
         markingType="custom"
         markedDates={marked}
         onDayPress={(day) => {
           const info = marked[day.dateString];
-          
-          const date = new Date(day.dateString).toLocaleDateString("en-US", {
-            month: "short",  // "Nov"
-            day: "numeric",  // 24
-            year: "numeric", // 2025
-            });
+
+          const date = new Date(day.dateString).toLocaleDateString('en-US', {
+            month: 'short', // "Nov"
+            day: 'numeric', // 24
+            year: 'numeric', // 2025
+          });
           setSelectedDate(date);
           if (info) {
             setSelectedEvent(info.eventNames);
@@ -174,58 +162,59 @@ export default function Calendar() {
             setSelectedEvent(null);
           }
         }}
-        
       />
 
       {selectedEvent && (
-                   
         <View style={styles.eventBox}>
           <Text style={styles.eventDate}>{selectedDate}</Text>
           <Text style={styles.eventButton}>EVENT</Text>
           <View style={styles.eventText}>
-             {selectedEvent.map((event, idx) => (
-               <Text key={idx} style={styles.eventText}>• {event}</Text>
-             ))}
+            {selectedEvent.map((event, idx) => (
+              <Text key={idx} style={styles.eventText}>
+                • {event}
+              </Text>
+            ))}
           </View>
         </View>
       )}
 
-    <Text style={styles.footer}>
-              © {new Date().getFullYear()} CaseyBus · Built with respect for the Camp Casey community.
-            </Text>
-      
+      <Text style={styles.footer}>
+        © {new Date().getFullYear()} CaseyBus · Built with respect for the Camp Casey community.
+      </Text>
     </View>
   );
 }
 
-const CARD_BG = "#fff";
-const TEXT = "rgba(56, 56, 56, 1)";
-const MUTED = "#919191ff";
-const LIGHT_BLUE = "#338AE0";
-const LIGHT_GRAY = "#0000002f";
-
+const CARD_BG = '#fff';
+const TEXT = 'rgba(56, 56, 56, 1)';
+const MUTED = '#919191ff';
+const LIGHT_BLUE = '#338AE0';
+const LIGHT_GRAY = '#0000002f';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f5f7f6',
     paddingTop: 50,
     paddingBottom: 30,
-    flex: 1
+    flex: 1,
   },
-    header: { alignItems: "center", marginTop: 8, marginBottom: 18 },
+  header: { alignItems: 'center', marginTop: 8, marginBottom: 18 },
   logoCircle: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: LIGHT_BLUE,
   },
-  title: { marginTop: 10, fontSize: 20, fontWeight: "700", color: TEXT, letterSpacing: 0.5 },
+  title: {
+    marginTop: 10,
+    fontSize: 20,
+    fontWeight: '700',
+    color: TEXT,
+    letterSpacing: 0.5,
+  },
   subtitle: { marginTop: 4, fontSize: 12, color: MUTED },
-
-
-
 
   calendar: {
     marginHorizontal: 20,
@@ -235,11 +224,10 @@ const styles = StyleSheet.create({
     borderColor: LIGHT_GRAY,
   },
 
-
   colorIndexBox: {
     paddingHorizontal: 16,
     paddingBottom: 12,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   colorIndex: {
@@ -263,12 +251,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
 
-
-
-
-
-
-
   eventBox: {
     marginHorizontal: 20,
     marginTop: 10,
@@ -279,10 +261,11 @@ const styles = StyleSheet.create({
   },
   eventDate: {
     position: 'absolute',
-    top: 10, right: 15,
+    top: 10,
+    right: 15,
     fontSize: 15,
     fontWeight: '500',
-    color: TEXT
+    color: TEXT,
   },
   eventButton: {
     fontSize: 10,
@@ -295,7 +278,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     borderRadius: 8,
     color: '#fff',
-
   },
   eventText: {
     marginHorizontal: 10,
@@ -307,10 +289,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 10,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 11.5,
     color: MUTED,
     opacity: 0.9,
   },
-
 });

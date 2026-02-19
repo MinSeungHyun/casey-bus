@@ -1,4 +1,4 @@
 export interface SvgPoint {
-  routeName:string,
-  pointList:number[][],
+  routeName: string;
+  pointList: number[][];
 }

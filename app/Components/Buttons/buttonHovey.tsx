@@ -3,13 +3,16 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const ButtonHovey = () => {
-    const router = useRouter();
+  const router = useRouter();
   return (
-    <View style={{paddingRight: 5}}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#e53935' }]} onPress={() => router.push('/Components/MinimapHovey')}>
-            <FontAwesome6 name="bus-simple" size={12} color="#fff" style={{ paddingRight: 5 }}/>
-            <Text style={styles.text}>Hovey</Text>
-        </TouchableOpacity>
+    <View style={{ paddingRight: 5 }}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: '#e53935' }]}
+        onPress={() => router.push('/Components/MinimapHovey')}
+      >
+        <FontAwesome6 name="bus-simple" size={12} color="#fff" style={{ paddingRight: 5 }} />
+        <Text style={styles.text}>Hovey</Text>
+      </TouchableOpacity>
     </View>
   );
 };

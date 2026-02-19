@@ -12,12 +12,12 @@ const MAPPING = {
   'house.fill': 'home',
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code', // 적절한 대체 아이콘
-  'chevron.right': 'chevron-right',                  // ← kebab-case로 수정!
-  'map.fill': 'map',                                 // 새 아이콘 추가 예시
+  'chevron.right': 'chevron-right', // ← kebab-case로 수정!
+  'map.fill': 'map', // 새 아이콘 추가 예시
   'dot.square.fill': 'lens',
-  'calendar': 'calendar-month',
+  calendar: 'calendar-month',
   'clock.fill': 'access-time-filled',
-  'gear': 'settings'
+  gear: 'settings',
   // 원하는 만큼 추가
 } satisfies Record<string, MIName>;
 
@@ -51,7 +51,8 @@ export function IconSymbol({
   }
 
   // Android/Web에선 MaterialIcons 사용 (매핑 없으면 name을 그대로 시도하고, 다시 실패시 'help')
-  const miName: MIName = ((MAPPING as unknown as Record<string, MIName>)[name as string] ?? (name as MIName)) || 'help';
+  const miName: MIName =
+    ((MAPPING as unknown as Record<string, MIName>)[name as string] ?? (name as MIName)) || 'help';
 
   return <MaterialIcons color={color as any} size={size} name={miName} style={style as any} />;
 }

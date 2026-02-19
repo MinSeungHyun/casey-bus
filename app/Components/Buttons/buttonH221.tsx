@@ -3,11 +3,14 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const ButtonH221 = () => {
-    const router = useRouter();
+  const router = useRouter();
   return (
-    <View style={{paddingRight: 5}}>
-      <TouchableOpacity style={[styles.button, { backgroundColor: '#4caf50' }]} onPress={() => router.push('/Components/MinimapH221')}>
-        <FontAwesome6 name="bus-simple" size={12} color="#fff" style={{ paddingRight: 5 }}/>
+    <View style={{ paddingRight: 5 }}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: '#4caf50' }]}
+        onPress={() => router.push('/Components/MinimapH221')}
+      >
+        <FontAwesome6 name="bus-simple" size={12} color="#fff" style={{ paddingRight: 5 }} />
         <Text style={styles.text}>H221</Text>
       </TouchableOpacity>
     </View>
