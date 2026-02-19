@@ -15,7 +15,8 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Helmet>
+      <Helmet defaultTitle="CaseyBus">
+        <meta name="description" content="Public-purpose shuttle info for Camp Casey" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
