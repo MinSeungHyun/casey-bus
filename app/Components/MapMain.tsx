@@ -256,7 +256,6 @@ export default function MapMain() {
                 paddingHorizontal: 20,
                 backgroundColor: '#666',
                 borderRadius: 5,
-                marginBottom: 10,
                 width: '100%',
                 alignItems: 'center',
               }}
@@ -265,7 +264,7 @@ export default function MapMain() {
             </TouchableOpacity>
 
             {/* Close for 1 day */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={async () => {
                 const oneDayLater = Date.now() + 24 * 60 * 60 * 1000;
                 await AsyncStorage.setItem('hideWarningUntil', String(oneDayLater));
@@ -281,7 +280,7 @@ export default function MapMain() {
               }}
             >
               <Text style={{ color: 'white', fontWeight: 'bold' }}>Don’t show for 1 day</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </Modal>
